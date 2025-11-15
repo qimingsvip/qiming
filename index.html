@@ -1,1 +1,1688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="启明俱乐部 - 专业加密货币交易社区，提供高胜率策略和实时行情分析">
+    <title>启明俱乐部 - 专业加密货币交易社区</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#ffffff',
+                            light: '#f8f9fa',
+                        },
+                        accent: {
+                            DEFAULT: '#3b82f6',
+                            gold: '#f59e0b',
+                            orange: '#e67e22',
+                        },
+                        dark: '#1f2937',
+                        light: '#f8f9fa',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* 容器优化 */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        @media (min-width: 640px) {
+            .container {
+                padding: 0 24px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 32px;
+            }
+        }
+        
+        /* 英雄区背景优化 */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>');
+            pointer-events: none;
+        }
+        
+        /* 导航栏优化 */
+        .nav-fixed {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
+        
+        /* 按钮优化 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            min-width: 48px;
+            min-height: 48px;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+        
+        /* 卡片优化 */
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 服务卡片 */
+        .service-card {
+            padding: 32px;
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            text-align: center;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #f59e0b);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* ID卡片优化 */
+        .id-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 4px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        
+        .id-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .id-card:hover::after {
+            left: 100%;
+        }
+        
+        /* 复制按钮优化 */
+        .copy-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: white;
+            border: 2px solid #e5e7eb;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .copy-btn:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            transform: scale(1.1);
+        }
+        
+        .copy-btn.copied {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+        
+        /* 警告框优化 */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .warning-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+        
+        /* 复制提示优化 */
+        .copy-toast {
+            animation: slideUp 0.3s ease-out, fadeOut 0.3s ease-out 1.7s forwards;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* 章节标题优化 - 居中显示 */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #f59e0b);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            color: #6b7280;
+            margin-top: 1.5rem;
+            font-size: 1.125rem;
+        }
+        
+        /* 了解更多链接样式 */
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .service-link:hover {
+            transform: translateX(4px);
+        }
+        
+        .service-link i {
+            transition: transform 0.3s ease;
+        }
+        
+        .service-link:hover i {
+            transform: translateX(4px);
+        }
+        
+        /* 详情模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUpModal 0.3s ease;
+            position: relative;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUpModal {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+        
+        .modal-close:hover {
+            background: #e5e7eb;
+            transform: rotate(90deg);
+        }
+        
+        /* 导航链接动画 */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link i {
+            margin-right: 6px;
+            width: 18px;
+            text-align: center;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #f59e0b);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* 移动端菜单优化 */
+        .mobile-menu {
+            transition: all 0.3s ease;
+            transform-origin: top;
+        }
+        
+        .mobile-menu.show {
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: scaleY(0);
+            }
+            to {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+        
+        /* 英雄区数据卡片 */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        /* 下载卡片居中内容 */
+        .download-card {
+            text-align: center;
+        }
+        
+        .download-card .flex {
+            justify-content: center;
+        }
+        
+        /* 系统要求样式 */
+        .system-req {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        
+        .feature-list {
+            text-align: left;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .feature-icon i {
+            color: white;
+            font-size: 12px;
+        }
+        
+        /* 应用预览样式 */
+        .app-preview {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        
+        .app-screenshot {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin: 0 auto 16px;
+            background: white;
+            padding: 8px;
+        }
+        
+        .app-screenshot img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+        
+        /* 用户评价样式 */
+        .user-reviews {
+            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        
+        .review-item {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-left: 3px solid #f59e0b;
+        }
+        
+        .review-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .review-stars {
+            color: #f59e0b;
+            margin-bottom: 4px;
+        }
+        
+        .review-text {
+            font-size: 14px;
+            color: #4b5563;
+            font-style: italic;
+        }
+        
+        .review-author {
+            font-size: 12px;
+            color: #6b7280;
+            text-align: right;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        
+        /* 响应式优化 */
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 100vh;
+                padding: 100px 0 60px;
+            }
+            
+            .service-card {
+                padding: 24px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .section-header {
+                margin-bottom: 3rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                max-height: 90vh;
+                border-radius: 16px;
+            }
+            
+            .modal-header {
+                padding: 20px;
+                border-radius: 16px 16px 0 0;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            /* 修复页脚布局 - 完全居中 */
+            footer .grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+                text-align: center !important;
+            }
+            
+            footer .grid > div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center !important;
+            }
+            
+            .footer-follow {
+                text-align: center !important;
+                justify-content: center !important;
+                width: 100% !important;
+            }
+            
+            .footer-follow .flex {
+                justify-content: center !important;
+            }
+            
+            /* 确保所有卡片在移动端居中 */
+            .card {
+                text-align: center;
+            }
+            
+            /* 确保下载指南部分的标题居中 */
+            #download h3,
+            #download p,
+            #download .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 nav-fixed py-4 px-4 transition-all duration-300">
+        <div class="container">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i class="fas fa-crown text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-dark">启明俱乐部</span>
+                </a>
+                
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#home" class="nav-link text-dark hover:text-accent font-medium">
+                        <i class="fas fa-home"></i>首页
+                    </a>
+                    <a href="#contact" class="nav-link text-dark hover:text-accent font-medium">
+                        <i class="fas fa-headset"></i>联系我们
+                    </a>
+                    <a href="#download" class="nav-link text-dark hover:text-accent font-medium">
+                        <i class="fas fa-download"></i>下载指南
+                    </a>
+                    <a href="#services" class="nav-link text-dark hover:text-accent font-medium">
+                        <i class="fas fa-concierge-bell"></i>我们的服务
+                    </a>
+                </div>
+                
+                <button class="lg:hidden text-dark focus:outline-none p-3" id="mobile-menu-button" aria-label="菜单" aria-expanded="false">
+                    <i class="fas fa-bars text-xl transition-transform duration-300"></i>
+                </button>
+            </div>
+            
+            <!-- 移动端菜单 -->
+            <div class="lg:hidden hidden mt-4 pb-4 mobile-menu" id="mobile-menu">
+                <div class="flex flex-col space-y-3 pt-4 border-t border-gray-200">
+                    <a href="#home" class="text-dark hover:text-accent py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors font-medium flex items-center">
+                        <i class="fas fa-home w-5 mr-3"></i>首页
+                    </a>
+                    <a href="#contact" class="text-dark hover:text-accent py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors font-medium flex items-center">
+                        <i class="fas fa-headset w-5 mr-3"></i>联系我们
+                    </a>
+                    <a href="#download" class="text-dark hover:text-accent py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors font-medium flex items-center">
+                        <i class="fas fa-download w-5 mr-3"></i>下载指南
+                    </a>
+                    <a href="#services" class="text-dark hover:text-accent py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors font-medium flex items-center">
+                        <i class="fas fa-concierge-bell w-5 mr-3"></i>我们的服务
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section id="home" class="hero-section text-white relative">
+        <div class="container relative z-10">
+            <div class="min-h-screen flex items-center py-20">
+                <div class="w-full">
+                    <div class="text-center max-w-4xl mx-auto">
+                        <div class="mb-12">
+                            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
+                                欢迎加入<br>
+                                <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-pink-400">启明俱乐部</span>
+                            </h1>
+                            <p class="text-lg md:text-xl text-white/90 mb-12 leading-relaxed">
+                                专业加密货币交易社区，85%高胜率策略，打造最强内群
+                            </p>
+                            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                                <a href="#contact" class="btn btn-primary py-4 px-8 text-lg">
+                                    <i class="fas fa-headset mr-3"></i>立即咨询
+                                </a>
+                                <a href="#download" class="btn btn-secondary py-4 px-8 text-lg">
+                                    <i class="fas fa-download mr-3"></i>下载应用
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-dark">
+                    联系我们
+                </h2>
+                <p class="section-subtitle">
+                    加入我们的专业交易社区，获取最优质的交易策略和市场分析
+                </p>
+            </div>
+            
+            <div class="card max-w-4xl mx-auto p-8 md:p-12">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-bold text-lg shadow-lg mb-6">
+                        <i class="fas fa-bell mr-3 text-xl animate-pulse"></i>重要通知
+                    </div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg max-w-3xl mx-auto">
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            国内币圈交流过于敏感，目前 QQ、微信以及钉钉交流群都换成 <span class="font-bold text-blue-600">Safew</span> 聊天室，接下来我们的社区交流软件主要在 Safew 聊天室。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-8 mb-8">
+                    <h3 class="text-2xl font-bold mb-6 text-dark text-center">加入我们的步骤</h3>
+                    <ol class="space-y-4 max-w-2xl mx-auto text-center">
+                        <li class="flex items-center justify-center">
+                            <div class="bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mr-3 text-sm font-bold mt-0.5">1</div>
+                            <span class="text-gray-700 text-lg">下载完成 Safew 应用</span>
+                        </li>
+                        <li class="flex items-center justify-center">
+                            <div class="bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mr-3 text-sm font-bold mt-0.5">2</div>
+                            <span class="text-gray-700 text-lg">使用邮箱注册账号</span>
+                        </li>
+                        <li class="flex items-center justify-center">
+                            <div class="bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mr-3 text-sm font-bold mt-0.5">3</div>
+                            <span class="text-gray-700 text-lg">账号注册好后添加Safew专属客服好友：@qm881</span>
+                        </li>
+                        <li class="flex items-center justify-center">
+                            <div class="bg-blue-500 text-white w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mr-3 text-sm font-bold mt-0.5">4</div>
+                            <span class="text-gray-700 text-lg">专属助理将邀请你加入社区交流群</span>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div class="text-center">
+                    <a href="#download" class="btn btn-primary py-4 px-8 text-lg">
+                        <i class="fas fa-arrow-down mr-3"></i>前往下载
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载指南 -->
+    <section id="download" class="py-20 bg-white">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-dark">
+                    下载指南
+                </h2>
+                <p class="section-subtitle">
+                    选择适合您的设备，下载 Safew 应用并加入我们的社区
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- 安卓下载 -->
+                <div class="card group download-card">
+                    <div class="p-8 md:p-10">
+                        <div class="flex justify-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="fab fa-android text-white text-3xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-dark ml-4">安卓用户</h3>
+                        </div>
+                        <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                            点击下方按钮直接下载 Safew 应用，支持所有 Android 设备
+                        </p>
+                        <a href="./afbe50e3.apk" target="_blank" class="btn btn-primary py-4 px-8 text-lg w-full">
+                            <i class="fas fa-download mr-3"></i>安卓下载
+                        </a>
+                        <div class="mt-6 flex items-center justify-center text-gray-500 text-sm">
+                            <i class="fas fa-shield-alt mr-2 text-green-500"></i>
+                            安全下载 · 已检测
+                        </div>
+                        
+                        <!-- 系统要求和功能特性 -->
+                        <div class="system-req">
+                            <h4 class="font-semibold text-blue-900 mb-3 flex items-center justify-center">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                系统要求与功能
+                            </h4>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-800">Android 5.0 及以上</div>
+                                        <div class="text-sm text-gray-600">支持 99% 的 Android 设备</div>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-hdd"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-800">安装包大小</div>
+                                        <div class="text-sm text-gray-600">约 116MB，轻量级设计</div>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-800">实时推送</div>
+                                        <div class="text-sm text-gray-600">策略消息即时通知</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 苹果下载 -->
+                <div class="card group download-card">
+                    <div class="p-8 md:p-10">
+                        <div class="flex justify-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-gray-800 to-black rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="fab fa-apple text-white text-3xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-dark ml-4">苹果用户</h3>
+                        </div>
+                        <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                            使用海外ID下载，请在 App Store 中登录下载
+                        </p>
+                        
+                        <div class="warning-box mb-6">
+                            <div class="flex items-start">
+                                <i class="fas fa-exclamation-triangle text-orange-500 text-2xl mr-3 flex-shrink-0"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-lg mb-2">⚠️ 重要提醒 ⚠️</h4>
+                                    <p class="text-gray-700 leading-relaxed">
+                                        请务必只在 App Store 中登录海外ID，不要在系统设置中登录！下载完成后请立即退出登录。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ID Card 1 -->
+                        <div class="id-card">
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <span class="text-blue-600 font-semibold text-sm">账号：</span>
+                                    <span class="font-mono text-gray-800 ml-2" id="id1-username">bsrordq9u17@hotmail.com</span>
+                                </div>
+                                <button class="copy-btn" onclick="copyToClipboard('id1-username', this)" title="复制账号">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-blue-600 font-semibold text-sm">密码：</span>
+                                    <span class="font-mono text-gray-800 ml-2" id="id1-password">q368Y1JtUmU06obq</span>
+                                </div>
+                                <button class="copy-btn" onclick="copyToClipboard('id1-password', this)" title="复制密码">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- ID Card 2 -->
+                        <div class="id-card">
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <span class="text-blue-600 font-semibold text-sm">账号：</span>
+                                    <span class="font-mono text-gray-800 ml-2" id="id2-username">jroberts48@hotmail.com</span>
+                                </div>
+                                <button class="copy-btn" onclick="copyToClipboard('id2-username', this)" title="复制账号">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-blue-600 font-semibold text-sm">密码：</span>
+                                    <span class="font-mono text-gray-800 ml-2" id="id2-password">L1GDW41Hoj3w5WUq</span>
+                                </div>
+                                <button class="copy-btn" onclick="copyToClipboard('id2-password', this)" title="复制密码">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- ID Card 3 -->
+                        <div class="id-card">
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <span class="text-blue-600 font-semibold text-sm">账号：</span>
+                                    <span class="font-mono text-gray-800 ml-2" id="id3-username">yj0jk7bui@hotmail.com</span>
+                                </div>
+                                <button class="copy-btn" onclick="copyToClipboard('id3-username', this)" title="复制账号">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-blue-600 font-semibold text-sm">密码：</span>
+                                    <span class="font-mono text-gray-800 ml-2" id="id3-password">C7V3yqYFhUfQ106B</span>
+                                </div>
+                                <button class="copy-btn" onclick="copyToClipboard('id3-password', this)" title="复制密码">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 使用提示 -->
+                        <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <div class="flex items-start">
+                                <i class="fas fa-lightbulb text-blue-600 mr-3 mt-1"></i>
+                                <div>
+                                    <h5 class="font-semibold text-blue-900 mb-2">💡 使用提示</h5>
+                                    <p class="text-gray-700">上方提供多个海外ID，每个ID都有不同的使用期限。如某个ID无法使用，请尝试其他ID。建议快速复制使用，避免多人同时使用同一账号。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 我们的服务 -->
+    <section id="services" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-dark">
+                    我们的服务
+                </h2>
+                <p class="section-subtitle">
+                    为您提供全方位的专业交易服务，助力您在加密货币市场取得成功
+                </p>
+            </div>
+            
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 服务卡片 1 -->
+                <div class="service-card">
+                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-chart-line text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">24小时实时策略</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        提供24小时免费实时策略单，日内高胜率短单策略，帮助您把握每一个交易机会。
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="service-link text-blue-600 font-semibold" onclick="showServiceDetail('strategy'); return false;">
+                            <span>了解更多</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 服务卡片 2 -->
+                <div class="service-card">
+                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-comments text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">专家在线解读</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        早晚盘专家在线解读，大事件定点分析指导，助您在市场波动中把握方向。
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="service-link text-purple-600 font-semibold" onclick="showServiceDetail('analysis'); return false;">
+                            <span>了解更多</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 服务卡片 3 -->
+                <div class="service-card">
+                    <div class="bg-gradient-to-br from-green-100 to-green-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-graduation-cap text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">专业教学指导</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        初级入学指导，中高级K线大师指导在线教学，系统化提升您的交易知识体系。
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="service-link text-green-600 font-semibold" onclick="showServiceDetail('education'); return false;">
+                            <span>了解更多</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 服务卡片 4 -->
+                <div class="service-card">
+                    <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-percentage text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">高额返佣</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        注册会员可获得高额返佣，降低交易成本，提高您的投资回报率。
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="service-link text-yellow-600 font-semibold" onclick="showServiceDetail('commission'); return false;">
+                            <span>了解更多</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 服务卡片 5 -->
+                <div class="service-card">
+                    <div class="bg-gradient-to-br from-red-100 to-red-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-users text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">精英社区</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        加入我们的精英社区，与众多资深交易者交流经验，共享市场洞察。
+                    </p>
+                    <div class="mt-6">
+                        <a href="#" class="service-link text-red-600 font-semibold" onclick="showServiceDetail('community'); return false;">
+                            <span>了解更多</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务详情模态框 -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeServiceModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h3 id="modalTitle" class="text-2xl font-bold text-dark"></h3>
+            </div>
+            <div class="modal-body" id="modalContent">
+                <!-- 动态内容 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-gradient-to-br from-gray-900 to-black text-white py-12">
+        <div class="container">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-crown text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">启明俱乐部</span>
+                    </div>
+                    <p class="text-gray-400">专业加密货币交易社区</p>
+                    <p class="text-gray-400 text-sm mt-2">85%胜率 · 实时策略 · 专业指导</p>
+                </div>
+                
+                <!-- 右侧关注我们 -->
+                <div class="md:col-span-2 flex justify-end">
+                    <div class="footer-follow">
+                        <h4 class="font-bold mb-4">关注我们</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors" aria-label="Telegram">
+                                <i class="fab fa-telegram-plane"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-400 transition-colors" aria-label="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition-colors" aria-label="Discord">
+                                <i class="fab fa-discord"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-green-600 transition-colors" aria-label="WeChat">
+                                <i class="fab fa-weixin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-gray-800 mb-8">
+            
+            <div class="text-center text-gray-400 text-sm">
+                <p>&copy; 2025 启明俱乐部. 保留所有权利.</p>
+                <p class="mt-2">免责声明：加密货币交易存在高风险，请谨慎投资。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 复制提示容器 -->
+    <div id="copy-toast-container" class="fixed bottom-8 left-0 right-0 flex justify-center pointer-events-none z-50"></div>
+
+    <!-- 返回顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hidden items-center justify-center hover:bg-blue-700 transition-all duration-300 z-40">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 服务详情数据
+        const serviceDetails = {
+            strategy: {
+                title: '24小时实时策略',
+                icon: 'fa-chart-line',
+                color: 'blue',
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-3 text-blue-900">策略特点</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-600 mr-2 mt-1"></i>
+                                    <span>24小时不间断发布交易策略，覆盖全球主要交易时段</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-600 mr-2 mt-1"></i>
+                                    <span>日内短单策略，持仓时间通常在1-4小时，降低隔夜风险</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-600 mr-2 mt-1"></i>
+                                    <span>严格的止损止盈设置，风险可控，收益稳定</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-600 mr-2 mt-1"></i>
+                                    <span>多币种覆盖，BTC、ETH等主流币种及潜力山寨币</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
+                            <h4 class="font-bold text-lg mb-3 text-yellow-900">风险提示</h4>
+                            <p class="text-gray-700">所有策略仅供参考，市场有风险，投资需谨慎。建议根据自身风险承受能力合理配置仓位。</p>
+                        </div>
+                    </div>
+                `
+            },
+            analysis: {
+                title: '专家在线解读',
+                icon: 'fa-comments',
+                color: 'purple',
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-purple-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-3 text-purple-900">解读内容</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-purple-600 mr-2 mt-1"></i>
+                                    <span>早间盘前分析：9:00 AM，分析当日市场预期</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-purple-600 mr-2 mt-1"></i>
+                                    <span>晚间复盘总结：8:00 PM，总结当日行情走势</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-purple-600 mr-2 mt-1"></i>
+                                    <span>重大事件实时解读：美联储决议、财报季等</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-purple-600 mr-2 mt-1"></i>
+                                    <span>技术指标深度分析：K线形态、技术指标应用</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-3 text-gray-900">专家团队</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user-tie text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold">首席分析师 - 启明</h5>
+                                        <p class="text-sm text-gray-600">7年实战经验，专注短线狙击与波段中线布局/风格激进</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user-tie text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold">技术专家 - 深蓝</h5>
+                                        <p class="text-sm text-gray-600">主做大饼 二饼波段/节奏慢/有耐心服务好</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user-tie text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold">基本面专家 - 颜池</h5>
+                                        <p class="text-sm text-gray-600">消息面/技术面相结合应对多种行情</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            education: {
+                title: '专业教学指导',
+                icon: 'fa-graduation-cap',
+                color: 'green',
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-green-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-3 text-green-900">教学体系</h4>
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-lg border border-green-200">
+                                    <h5 class="font-semibold mb-2 flex items-center">
+                                        <span class="bg-green-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm mr-2">1</span>
+                                        初级入门班
+                                    </h5>
+                                    <ul class="text-sm text-gray-600 space-y-1 ml-8">
+                                        <li>• 基础知识讲解</li>
+                                        <li>• 交易软件使用</li>
+                                        <li>• 风险管理基础</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-green-200">
+                                    <h5 class="font-semibold mb-2 flex items-center">
+                                        <span class="bg-green-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm mr-2">2</span>
+                                        中级进阶班
+                                    </h5>
+                                    <ul class="text-sm text-gray-600 space-y-1 ml-8">
+                                        <li>• 技术指标深度应用</li>
+                                        <li>• 交易策略制定</li>
+                                        <li>• 实盘案例分析</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-green-200">
+                                    <h5 class="font-semibold mb-2 flex items-center">
+                                        <span class="bg-green-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm mr-2">3</span>
+                                        高级研修班
+                                    </h5>
+                                    <ul class="text-sm text-gray-600 space-y-1 ml-8">
+                                        <li>• K线大师课程</li>
+                                        <li>• 量化交易基础</li>
+                                        <li>• 资金管理高级策略</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            commission: {
+                title: '高额返佣',
+                icon: 'fa-percentage',
+                color: 'yellow',
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-yellow-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-3 text-yellow-900">返佣政策</h4>
+                            <div class="space-y-4">
+                                <div class="bg-white p-4 rounded-lg border border-yellow-200">
+                                    <h5 class="font-semibold mb-2">返佣比例</h5>
+                                    <div class="text-3xl font-bold text-yellow-600 mb-2">高达 50%</div>
+                                    <p class="text-sm text-gray-600">行业领先返佣比例，降低您的交易成本</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-3 text-green-900">VIP等级特权</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between bg-white p-3 rounded-lg">
+                                    <div class="flex items-center">
+                                        <span class="bg-gray-400 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">V1</span>
+                                        <span>初级会员</span>
+                                    </div>
+                                    <span class="font-semibold">20% 返佣</span>
+                                </div>
+                                <div class="flex items-center justify-between bg-white p-3 rounded-lg">
+                                    <div class="flex items-center">
+                                        <span class="bg-gray-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">V2</span>
+                                        <span>中级会员</span>
+                                    </div>
+                                    <span class="font-semibold">35% 返佣</span>
+                                </div>
+                                <div class="flex items-center justify-between bg-yellow-100 p-3 rounded-lg border-2 border-yellow-500">
+                                    <div class="flex items-center">
+                                        <span class="bg-yellow-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">V3</span>
+                                        <span class="font-bold">高级会员</span>
+                                    </div>
+                                    <span class="font-bold text-yellow-600">50% 返佣</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            community: {
+                title: '精英社区',
+                icon: 'fa-users',
+                color: 'red',
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-red-50 p-6 rounded-lg">
+                            <h4 class="font-bold text-lg mb-3 text-red-900">社区优势</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-white p-4 rounded-lg border border-red-200">
+                                    <h5 class="font-semibold mb-2 flex items-center">
+                                        <i class="fas fa-star text-red-600 mr-2"></i>
+                                        高质量交流
+                                    </h5>
+                                    <p class="text-sm text-gray-600">严格筛选成员，保证社区质量</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-red-200">
+                                    <h5 class="font-semibold mb-2 flex items-center">
+                                        <i class="fas fa-shield-alt text-red-600 mr-2"></i>
+                                        信息安全
+                                    </h5>
+                                    <p class="text-sm text-gray-600">私密社区，信息不外泄</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-red-200">
+                                    <h5 class="font-semibold mb-2 flex items-center">
+                                        <i class="fas fa-trophy text-red-600 mr-2"></i>
+                                        实战分享
+                                    </h5>
+                                    <p class="text-sm text-gray-600">真实交易案例分享学习</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg border border-red-200">
+                                    <h5 class="font-semibold mb-2 flex items-center">
+                                        <i class="fas fa-gift text-red-600 mr-2"></i>
+                                        专属福利
+                                    </h5>
+                                    <p class="text-sm text-gray-600">社区成员专享优惠活动</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 p-6 rounded-lg border border-green-200">
+                            <h4 class="font-bold text-lg mb-3 text-green-900">加入社区</h4>
+                            <p class="text-gray-700 mb-4">成为精英社区的一员，与优秀交易者共同成长。</p>
+                            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                                <a href="#contact" class="btn btn-primary">
+                                    <i class="fas fa-user-plus mr-2"></i>
+                                    申请加入
+                                </a>
+                                <a href="#" class="btn btn-secondary">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    了解更多
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // 显示服务详情
+        function showServiceDetail(serviceType) {
+            const modal = document.getElementById('serviceModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            
+            const service = serviceDetails[serviceType];
+            if (service) {
+                modalTitle.innerHTML = `
+                    <i class="fas ${service.icon} text-${service.color}-600 mr-3"></i>
+                    ${service.title}
+                `;
+                modalContent.innerHTML = service.content;
+                
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // 关闭服务模态框
+        function closeServiceModal() {
+            const modal = document.getElementById('serviceModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('serviceModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeServiceModal();
+            }
+        });
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeServiceModal();
+            }
+        });
+
+        // 移动端菜单切换
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const icon = mobileMenuButton.querySelector('i');
+        
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('show');
+            
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            
+            if (isExpanded) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        }
+        
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        mobileMenuButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            toggleMobileMenu();
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                    
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+        });
+        
+        // 复制功能
+        function copyToClipboard(elementId, button) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            const textToCopy = element.textContent.trim();
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    handleCopySuccess(button);
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(textToCopy, button);
+                });
+            } else {
+                fallbackCopyTextToClipboard(textToCopy, button);
+            }
+        }
+        
+        function fallbackCopyTextToClipboard(text, button) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            tempInput.setSelectionRange(0, text.length);
+            
+            try {
+                const success = document.execCommand('copy');
+                if (success) {
+                    handleCopySuccess(button);
+                } else {
+                    showCopyToast('复制失败，请手动复制');
+                }
+            } catch (err) {
+                console.error('复制失败:', err);
+                showCopyToast('复制失败，请手动复制');
+            }
+            document.body.removeChild(tempInput);
+        }
+        
+        function handleCopySuccess(button) {
+            button.classList.add('copied');
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            showCopyToast('复制成功！');
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = '<i class="far fa-copy"></i>';
+            }, 2000);
+        }
+        
+        // 显示复制提示
+        function showCopyToast(message) {
+            const container = document.getElementById('copy-toast-container');
+            if (!container) return;
+            
+            const existingToasts = container.querySelectorAll('.copy-toast');
+            existingToasts.forEach(toast => toast.remove());
+            
+            const toast = document.createElement('div');
+            toast.className = 'copy-toast';
+            toast.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    if (container.contains(toast)) {
+                        container.removeChild(toast);
+                    }
+                }, 300);
+            }, 2000);
+        }
+        
+        // 返回顶部功能
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('hidden');
+                backToTopButton.classList.add('flex');
+            } else {
+                backToTopButton.classList.add('hidden');
+                backToTopButton.classList.remove('flex');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 导航栏滚动效果
+        const navbar = document.querySelector('nav');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // 页面加载动画
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+        
+        // 添加触摸优化
+        if ('ontouchstart' in window) {
+            document.body.classList.add('touch-device');
+        }
+    </script>
+</body>
+</html>
