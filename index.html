@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -39,6 +38,108 @@
     }
 </script>
 <style>
+    /* 这里保留您原有的所有CSS样式 */
+    /* 为了简洁，我只显示新增的样式 */
+    
+    /* 加载动画样式 */
+    .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(59, 130, 246, 0.3);
+        border-radius: 50%;
+        border-top-color: #3b82f6;
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* ID卡片加载状态 */
+    .id-card.loading {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+    
+    /* 刷新按钮样式 */
+    .refresh-btn {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    
+    .refresh-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    
+    .refresh-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    .refresh-btn.loading .refresh-icon {
+        animation: spin 1s linear infinite;
+    }
+    
+    /* 错误提示样式 */
+    .error-message {
+        background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        border: 2px solid #ef4444;
+        border-radius: 12px;
+        padding: 16px;
+        margin: 16px 0;
+        color: #991b1b;
+        text-align: center;
+        animation: fadeInUp 0.3s ease-out;
+    }
+    
+    .success-message {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border: 2px solid #22c55e;
+        border-radius: 12px;
+        padding: 16px;
+        margin: 16px 0;
+        color: #166534;
+        text-align: center;
+        animation: fadeInUp 0.3s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* 更新时间显示 */
+    .update-time {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 12px;
+        color: #64748b;
+        text-align: center;
+        margin-top: 12px;
+    }
+    
+    /* 保留您原有的所有其他样式 */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
     * {
@@ -58,52 +159,6 @@
         color: #1f2937;
         line-height: 1.6;
         overflow-x: hidden;
-    }
-    
-    /* 容器优化 */
-    .container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-    
-    @media (min-width: 640px) {
-        .container {
-            padding: 0 24px;
-        }
-    }
-    
-    @media (min-width: 1024px) {
-        .container {
-            padding: 0 32px;
-        }
-    }
-    
-    /* 英雄区背景优化 */
-    .hero-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        background-size: 400% 400%;
-        animation: gradientShift 15s ease infinite;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>');
-        pointer-events: none;
     }
     
     /* 导航栏优化 - 修复z-index问题 */
@@ -301,11 +356,6 @@
         height: 200%;
         background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
         animation: pulse 3s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.1); opacity: 0.7; }
     }
     
     /* 复制提示优化 */
@@ -893,6 +943,52 @@
         z-index: 1001; /* 确保菜单按钮在其他元素之上 */
     }
 
+    /* 容器优化 */
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    @media (min-width: 640px) {
+        .container {
+            padding: 0 24px;
+        }
+    }
+    
+    @media (min-width: 1024px) {
+        .container {
+            padding: 0 32px;
+        }
+    }
+    
+    /* 英雄区背景优化 */
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>');
+        pointer-events: none;
+    }
+
     /* 响应式调整 */
     @media (max-width: 768px) {
         .hero-section {
@@ -1041,6 +1137,8 @@
 </head>
 <body>
 
+<!-- 主内容区域 -->
+<div id="mainContent">
 <!-- 导航栏 -->
 <nav class="fixed top-0 left-0 right-0 nav-fixed py-4 px-4 transition-all duration-300 shadow-lg" style="z-index: 999;">
 <div class="container">
@@ -1201,7 +1299,7 @@
                     <p class="text-gray-600 text-lg mb-6 leading-relaxed">
                         点击下方按钮直接下载 Safew 应用，支持所有 Android 设备
                     </p>
-                    <a href="https://safew.ftihzjg.com/download_app/com.i0vrm1.jjb71gjo_1.14.2_251109_afbe50e3.apk" target="_blank" class="btn btn-primary py-4 px-8 text-lg w-full">
+                    <a href="https://vip.qiming.love/afbe50e3.apk" target="_blank" class="btn btn-primary py-4 px-8 text-lg">
                         <i class="fas fa-download mr-3"></i>安卓下载
                     </a>
                     <div class="mt-6 flex items-center justify-center text-gray-500 text-sm">
@@ -1248,7 +1346,7 @@
                 </div>
             </div>
             
-            <!-- 苹果下载 -->
+            <!-- 苹果下载 - 动态更新 -->
             <div class="card group download-card">
                 <div class="p-8 md:p-10">
                     <div class="flex justify-center mb-6">
@@ -1261,81 +1359,24 @@
                         使用海外ID下载，请在 App Store 中登录下载
                     </p>
                     
-                    <div class="warning-box mb-6">
-                        <div class="flex items-start">
-                            <i class="fas fa-exclamation-triangle text-orange-500 text-2xl mr-3 flex-shrink-0"></i>
-                            <div>
-                                <h4 class="font-bold text-gray-800 text-lg mb-2">⚠️ 重要提醒 ⚠️</h4>
-                                <p class="text-gray-700 leading-relaxed">
-                                    请务必只在 App Store 中登录海外ID，不要在系统设置中登录！下载完成后请立即退出登录。
-                                </p>
-                            </div>
-                        </div>
+                    <!-- 刷新按钮 -->
+                    <div class="text-center mb-4">
+                        <button id="refreshAccounts" class="refresh-btn">
+                            <i class="fas fa-sync-alt refresh-icon"></i>
+                            刷新账号
+                        </button>
                     </div>
                     
-                    <!-- ID Card 1 -->
-                    <div class="id-card">
-                        <div class="flex justify-between items-center mb-3">
-                            <div>
-                                <span class="text-blue-600 font-semibold text-sm">账号：</span>
-                                <span class="font-mono text-gray-800 ml-2" id="id1-username">bsrordq9u17@hotmail.com</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyToClipboard('id1-username', this)" title="复制账号">
-                                <i class="far fa-copy"></i>
-                            </button>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="text-blue-600 font-semibold text-sm">密码：</span>
-                                <span class="font-mono text-gray-800 ml-2" id="id1-password">q368Y1JtUmU06obq</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyToClipboard('id1-password', this)" title="复制密码">
-                                <i class="far fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <!-- 状态消息容器 -->
+                    <div id="statusMessage"></div>
                     
-                    <!-- ID Card 2 -->
-                    <div class="id-card">
-                        <div class="flex justify-between items-center mb-3">
-                            <div>
-                                <span class="text-blue-600 font-semibold text-sm">账号：</span>
-                                <span class="font-mono text-gray-800 ml-2" id="id2-username">jroberts48@hotmail.com</span>
+                    <!-- 账号卡片容器 - 动态生成 -->
+                    <div id="accountsContainer">
+                        <div class="id-card loading">
+                            <div class="flex justify-center items-center py-4">
+                                <div class="loading-spinner mr-3"></div>
+                                <span>正在加载账号信息...</span>
                             </div>
-                            <button class="copy-btn" onclick="copyToClipboard('id2-username', this)" title="复制账号">
-                                <i class="far fa-copy"></i>
-                            </button>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="text-blue-600 font-semibold text-sm">密码：</span>
-                                <span class="font-mono text-gray-800 ml-2" id="id2-password">L1GDW41Hoj3w5WUq</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyToClipboard('id2-password', this)" title="复制密码">
-                                <i class="far fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- ID Card 3 -->
-                    <div class="id-card">
-                        <div class="flex justify-between items-center mb-3">
-                            <div>
-                                <span class="text-blue-600 font-semibold text-sm">账号：</span>
-                                <span class="font-mono text-gray-800 ml-2" id="id3-username">yj0jk7bui@hotmail.com</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyToClipboard('id3-username', this)" title="复制账号">
-                                <i class="far fa-copy"></i>
-                            </button>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <span class="text-blue-600 font-semibold text-sm">密码：</span>
-                                <span class="font-mono text-gray-800 ml-2" id="id3-password">C7V3yqYFhUfQ106B</span>
-                            </div>
-                            <button class="copy-btn" onclick="copyToClipboard('id3-password', this)" title="复制密码">
-                                <i class="far fa-copy"></i>
-                            </button>
                         </div>
                     </div>
                     
@@ -1348,6 +1389,12 @@
                                 <p class="text-gray-700">上方提供多个海外ID，每个ID都有不同的使用期限。如某个ID无法使用，请尝试其他ID。建议快速复制使用，避免多人同时使用同一账号。</p>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- 更新时间显示 -->
+                    <div id="updateTime" class="update-time" style="display: none;">
+                        <i class="fas fa-clock mr-2"></i>
+                        最后更新时间：<span id="updateTimeText"></span>
                     </div>
                 </div>
             </div>
@@ -1491,37 +1538,69 @@
 <!-- 页脚 -->
 <footer class="bg-gradient-to-br from-gray-900 to-black text-white py-12">
     <div class="container">
-        <div class="grid md:grid-cols-3 gap-8 mb-8">
-            <!-- 左侧品牌信息 -->
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- 左侧导航 -->
             <div class="text-center md:text-left">
-                <div class="flex items-center justify-center md:justify-start space-x-3 mb-4">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                <h4 class="font-semibold mb-4 text-white">快速导航</h4>
+                <ul class="space-y-2">
+                    <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">首页</a></li>
+                    <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">联系我们</a></li>
+                    <li><a href="#download" class="text-gray-400 hover:text-white transition-colors">下载指南</a></li>
+                    <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">我们的服务</a></li>
+                </ul>
+            </div>
+            
+            <!-- 中间品牌信息 - 居中显示 -->
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-3 mb-4">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                         <i class="fas fa-crown text-white"></i>
                     </div>
                     <span class="text-xl font-bold">启明俱乐部</span>
                 </div>
-                <p class="text-gray-400">专业加密货币交易社区</p>
-                <p class="text-gray-400 text-sm mt-2">85%胜率 · 实时策略 · 专业指导</p>
+                
+                <!-- 水平排列的特性，标题居中 -->
+                <div class="relative">
+                    <div class="flex items-center justify-center space-x-4 text-sm">
+                        <span class="text-gray-400 flex items-center">
+                            <i class="fas fa-percentage text-green-400 mr-1"></i>
+                            85%胜率
+                        </span>
+                        <span class="text-gray-400">·</span>
+                        <span class="text-gray-400 flex items-center">
+                            <i class="fas fa-chart-line text-blue-400 mr-1"></i>
+                            实时策略
+                        </span>
+                        <span class="text-gray-400">·</span>
+                        <span class="text-gray-400 flex items-center">
+                            <i class="fas fa-graduation-cap text-purple-400 mr-1"></i>
+                            专业指导
+                        </span>
+                    </div>
+                    <p class="text-gray-400 absolute inset-x-0 -bottom-6 text-xs opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        专业加密货币交易社区
+                    </p>
+                </div>
+                
+                <!-- 移动端显示完整标题 -->
+                <p class="text-gray-400 mt-6 md:hidden">专业加密货币交易社区</p>
             </div>
             
-            <!-- 中间空白区域 -->
-            <div></div>
-            
-            <!-- 右侧关注我们 -->
+            <!-- 右侧社交媒体 -->
             <div class="text-center md:text-right">
-                <h4 class="font-bold mb-4">关注我们</h4>
+                <h4 class="font-semibold mb-4 text-white footer-follow">关注我们</h4>
                 <div class="flex justify-center md:justify-end space-x-4">
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors social-icon" aria-label="Telegram">
-                        <i class="fab fa-telegram-plane"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-400 transition-colors social-icon" aria-label="Twitter">
+                    <a href="#" class="social-icon w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition-colors social-icon" aria-label="Discord">
-                        <i class="fab fa-discord"></i>
+                    <a href="#" class="social-icon w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-500 transition-colors">
+                        <i class="fab fa-telegram"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-green-600 transition-colors social-icon" aria-label="WeChat">
-                        <i class="fab fa-weixin"></i>
+                    <a href="#" class="social-icon w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-icon w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                        <i class="fab fa-discord"></i>
                     </a>
                 </div>
             </div>
@@ -1530,7 +1609,7 @@
         <hr class="border-gray-800 mb-8">
         
         <div class="text-center text-gray-400 text-sm">
-            <p>&copy; 2025 启明俱乐部. 保留所有权利.</p>
+            <p>© 2025 启明俱乐部. 保留所有权利.</p>
             <p class="mt-2">免责声明：加密货币交易存在高风险，请谨慎投资。</p>
         </div>
     </div>
@@ -1544,7 +1623,168 @@
     <i class="fas fa-arrow-up"></i>
 </button>
 
+</div>
+
 <script>
+    // 账号管理功能
+    let currentAccounts = [];
+    let lastUpdateTime = null;
+
+    // 从API加载账号信息
+    async function loadAccounts() {
+        const container = document.getElementById('accountsContainer');
+        const statusMessage = document.getElementById('statusMessage');
+        const updateTimeDiv = document.getElementById('updateTime');
+        const updateTimeText = document.getElementById('updateTimeText');
+        
+        try {
+            // 显示加载状态
+            container.innerHTML = `
+                <div class="id-card loading">
+                    <div class="flex justify-center items-center py-4">
+                        <div class="loading-spinner mr-3"></div>
+                        <span>正在加载账号信息...</span>
+                    </div>
+                </div>
+            `;
+            
+            // 调用API
+            const response = await fetch('https://vip.qiming.love/ck.php');
+            const data = await response.json();
+            
+            if (data.success && data.data) {
+                currentAccounts = data.data;
+                lastUpdateTime = new Date();
+                
+                // 渲染账号卡片
+                renderAccounts(data.data);
+                
+                // 显示更新时间
+                updateTimeText.textContent = lastUpdateTime.toLocaleString('zh-CN');
+                updateTimeDiv.style.display = 'block';
+                
+                // 显示成功消息
+                statusMessage.innerHTML = `
+                    <div class="success-message">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        成功加载 ${data.total} 个账号
+                    </div>
+                `;
+                
+                // 3秒后隐藏成功消息
+                setTimeout(() => {
+                    if (statusMessage.firstChild && statusMessage.firstChild.classList.contains('success-message')) {
+                        statusMessage.innerHTML = '';
+                    }
+                }, 3000);
+                
+            } else {
+                throw new Error(data.message || '获取账号信息失败');
+            }
+            
+        } catch (error) {
+            console.error('加载账号失败:', error);
+            
+            // 显示错误消息
+            statusMessage.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    加载失败：${error.message}
+                </div>
+            `;
+            
+            // 显示备用静态账号
+            showFallbackAccounts();
+        }
+    }
+
+    // 渲染账号卡片
+    function renderAccounts(accounts) {
+        const container = document.getElementById('accountsContainer');
+        
+        if (!accounts || accounts.length === 0) {
+            container.innerHTML = `
+                <div class="id-card">
+                    <div class="text-center py-4 text-gray-500">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        暂无可用的账号信息
+                    </div>
+                </div>
+            `;
+            return;
+        }
+        
+        // 生成HTML
+        let html = '';
+        accounts.forEach((account, index) => {
+            const accountPrefix = `account_${index}`;
+            const passwordPrefix = `password_${index}`;
+            
+            html += `
+                <div class="id-card" data-region="${account.区域 || ''}">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center">
+                            ${account.区域 ? `<span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded mr-2">${account.区域}</span>` : ''}
+                            <span class="text-blue-600 font-semibold text-sm">账号：</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyToClipboard('${accountPrefix}', this)" title="复制账号">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <span class="font-mono text-gray-800 block text-sm" id="${accountPrefix}">${account.账号 || ''}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-blue-600 font-semibold text-sm">密码：</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyToClipboard('${passwordPrefix}', this)" title="复制密码">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <span class="font-mono text-gray-800 block text-sm" id="${passwordPrefix}">${account.密码 || ''}</span>
+                    </div>
+                    ${account.状态 ? `<div class="mt-2 text-xs text-gray-500">状态：${account.状态}</div>` : ''}
+                    ${account.更新时间 ? `<div class="mt-1 text-xs text-gray-400">${account.更新时间}</div>` : ''}
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+    }
+
+    // 显示备用静态账号
+    function showFallbackAccounts() {
+        const container = document.getElementById('accountsContainer');
+        const fallbackAccounts = [
+            { 账号: 'idellaziler@yahoo.com', 密码: 'Fo229922', 区域: '港区' },
+            { 账号: 'spell99501448@icloud.com', 密码: 'Lo339933', 区域: '港区' },
+            { 账号: 'MadihaBauer824@icloud.com', 密码: 'Fo330033', 区域: '台区' }
+        ];
+        
+        renderAccounts(fallbackAccounts);
+    }
+
+    // 刷新账号按钮功能
+    document.getElementById('refreshAccounts').addEventListener('click', function() {
+        const btn = this;
+        const originalHTML = btn.innerHTML;
+        
+        // 显示加载状态
+        btn.disabled = true;
+        btn.classList.add('loading');
+        btn.innerHTML = '<i class="fas fa-sync-alt refresh-icon"></i> 刷新中...';
+        
+        // 重新加载账号
+        loadAccounts().finally(() => {
+            // 恢复按钮状态
+            btn.disabled = false;
+            btn.classList.remove('loading');
+            btn.innerHTML = originalHTML;
+        });
+    });
+
     // 服务详情数据
     const serviceDetails = {
         strategy: {
@@ -1729,7 +1969,7 @@
                             <div class="flex items-center justify-between bg-yellow-100 p-3 rounded-lg border-2 border-yellow-500">
                                 <div class="flex items-center">
                                     <span class="bg-yellow-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">V3</span>
-                                    <span class="font-bold">高级会员</span>
+                                    <span class="font-bold text-yellow-600">高级会员</span>
                                 </div>
                                 <span class="font-bold text-yellow-600">50%+ 返佣</span>
                             </div>
@@ -1842,7 +2082,7 @@
                         </h4>
                         <div class="flex justify-center">
                             <div class="xe-card w-full max-w-sm" style="display: inline-block; vertical-align: top;">
-                                <a href="https://www.theblockbeats.info/" target="_blank" class="xe-widget xe-conversations box2 label-info block" data-toggle="tooltip" data-placement="bottom" title="前往BlockBeats" data-original-title="律动BlockBeats, BlockBeats 是一家专业的Crypto、Web3及NFT研究机构及资讯平台，网站内容涵盖海外区块链新闻以及国内行业信息 - BlockBeats is most influential Chinese-language media outlet in the global blockchain industry. Providing with the latest Web3、Crypto&amp;NFT news and information.">
+                                <a href="https://www.theblockbeats.info/" target="_blank" class="xe-widget xe-conversations box2 label-info block" data-toggle="tooltip" data-placement="bottom" title="前往BlockBeats" data-original-title="律动BlockBeats, BlockBeats 是一家专业的Crypto、Web3及NFT研究机构及资讯平台，网站内容涵盖海外区块链新闻以及国内行业信息 - BlockBeats is most influential Chinese-language media outlet in global blockchain industry. Providing with latest Web3、Crypto&amp;NFT news and information.">
                                     <div class="xe-conversations">
                                         <div class="xe-comment-entry">
                                             <div class="xe-user-img">
@@ -1852,7 +2092,7 @@
                                                 <div class="xe-user-name overflowClip_1">
                                                     <strong>BlockBeats</strong>
                                                 </div>
-                                                <p class="overflowClip_1">律动BlockBeats, BlockBeats 是一家专业的Crypto、Web3及NFT研究机构及资讯平台，网站内容涵盖海外区块链新闻以及国内行业信息 - BlockBeats is the most influential Chinese-language media outlet in the global blockchain industry. Providing with the latest Web3、Crypto&amp;NFT news and information.</p>
+                                                <p class="overflowClip_1">律动BlockBeats, BlockBeats 是一家专业的Crypto、Web3及NFT研究机构及资讯平台，网站内容涵盖海外区块链新闻以及国内行业信息 - BlockBeats is most influential Chinese-language media outlet in global blockchain industry. Providing with latest Web3、Crypto&amp;NFT news and information.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1870,12 +2110,6 @@
             `
         }
     };
-
-    // 页面加载完成处理
-    window.addEventListener('load', function() {
-        // 初始化页面动画
-        initializePageAnimations();
-    });
 
     // 初始化页面动画
     function initializePageAnimations() {
@@ -1978,7 +2212,7 @@
         
         // 添加关闭动画
         const modalContent = modal.querySelector('.modal-content');
-        modalContent.style.animation = 'slideDownModal 0.3s ease-out reverse';
+        modalContent.style.animation = 'slideUpModal 0.3s ease-out reverse';
         
         setTimeout(() => {
             modal.classList.remove('show');
@@ -2188,6 +2422,15 @@
     if ('ontouchstart' in window) {
         document.body.classList.add('touch-device');
     }
+
+    // 页面加载时初始化
+    window.addEventListener('DOMContentLoaded', function() {
+        // 初始化页面动画
+        initializePageAnimations();
+        
+        // 加载账号信息
+        loadAccounts();
+    });
 
 </script>
 
