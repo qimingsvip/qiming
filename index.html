@@ -38,9 +38,6 @@
     }
 </script>
 <style>
-    /* 这里保留您原有的所有CSS样式 */
-    /* 为了简洁，我只显示新增的样式 */
-    
     /* 加载动画样式 */
     .loading-spinner {
         display: inline-block;
@@ -139,7 +136,6 @@
         margin-top: 12px;
     }
     
-    /* 保留您原有的所有其他样式 */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
     * {
@@ -161,12 +157,65 @@
         overflow-x: hidden;
     }
     
-    /* 导航栏优化 - 修复z-index问题 */
+    /* 主内容区域 */
+    .main-content {
+        opacity: 1;
+        pointer-events: auto;
+        transition: opacity 0.3s ease;
+    }
+    
+    /* 容器优化 */
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    @media (min-width: 640px) {
+        .container {
+            padding: 0 24px;
+        }
+    }
+    
+    @media (min-width: 1024px) {
+        .container {
+            padding: 0 32px;
+        }
+    }
+    
+    /* 英雄区背景优化 */
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>');
+        pointer-events: none;
+    }
+    
+    /* 导航栏优化 */
     .nav-fixed {
         backdrop-filter: blur(10px);
         background: rgba(255, 255, 255, 0.95);
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        z-index: 999; /* 降低z-index，确保不覆盖模态框 */
+        z-index: 999;
         transition: all 0.3s ease;
     }
     
@@ -223,6 +272,17 @@
     .btn-secondary:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+    }
+    
+    .btn-usd {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-usd:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
     }
     
     /* 卡片优化 */
@@ -459,7 +519,7 @@
         transform: translateX(4px);
     }
     
-    /* 详情模态框样式 - 确保最高层级 */
+    /* 详情模态框样式 */
     .modal {
         display: none;
         position: fixed;
@@ -469,7 +529,7 @@
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(5px);
-        z-index: 9999; /* 确保模态框在最高层级 */
+        z-index: 9999;
         animation: fadeIn 0.3s ease;
     }
     
@@ -536,7 +596,7 @@
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease;
-        z-index: 10000; /* 关闭按钮在模态框内容之上 */
+        z-index: 10000;
         font-size: 18px;
     }
     
@@ -557,7 +617,7 @@
         transition: color 0.3s ease;
         display: flex;
         align-items: center;
-        padding: 4px 0; /* 添加内边距，增加可点击区域 */
+        padding: 4px 0;
     }
     
     .nav-link i {
@@ -914,7 +974,7 @@
         height: 100%;
     }
 
-    /* 返回顶部按钮优化 - 仅在页面底部显示 */
+    /* 返回顶部按钮优化 */
     #backToTop {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 999;
@@ -937,56 +997,10 @@
         box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
     }
 
-    /* 移动端菜单按钮 - 确保可点击 */
+    /* 移动端菜单按钮 */
     #mobile-menu-button {
         position: relative;
-        z-index: 1001; /* 确保菜单按钮在其他元素之上 */
-    }
-
-    /* 容器优化 */
-    .container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-    
-    @media (min-width: 640px) {
-        .container {
-            padding: 0 24px;
-        }
-    }
-    
-    @media (min-width: 1024px) {
-        .container {
-            padding: 0 32px;
-        }
-    }
-    
-    /* 英雄区背景优化 */
-    .hero-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        background-size: 400% 400%;
-        animation: gradientShift 15s ease infinite;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>');
-        pointer-events: none;
+        z-index: 1001;
     }
 
     /* 响应式调整 */
@@ -1049,43 +1063,6 @@
         .overflowClip_2 {
             font-size: 10px;
         }
-
-        /* 修复页脚布局 - 完全居中 */
-        footer .grid {
-            grid-template-columns: 1fr !important;
-            gap: 2rem !important;
-            text-align: center !important;
-        }
-        
-        footer .grid > div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center !important;
-        }
-        
-        .footer-follow {
-            text-align: center !important;
-            justify-content: center !important;
-            width: 100% !important;
-        }
-        
-        .footer-follow .flex {
-            justify-content: center !important;
-        }
-        
-        /* 确保所有卡片在移动端居中 */
-        .card {
-            text-align: center;
-        }
-        
-        /* 确保下载指南部分的标题居中 */
-        #download h3,
-        #download p,
-        #download .btn {
-            text-align: center;
-        }
     }
 
     /* 增强动画效果 */
@@ -1138,9 +1115,9 @@
 <body>
 
 <!-- 主内容区域 -->
-<div id="mainContent">
+<div id="mainContent" class="main-content">
 <!-- 导航栏 -->
-<nav class="fixed top-0 left-0 right-0 nav-fixed py-4 px-4 transition-all duration-300 shadow-lg" style="z-index: 999;">
+<nav class="fixed top-0 left-0 right-0 nav-fixed py-4 px-4 transition-all duration-300 shadow-lg">
 <div class="container">
 <div class="flex justify-between items-center">
 <a href="#home" class="flex items-center space-x-3 group">
@@ -1207,6 +1184,9 @@
                         <div class="flex flex-col sm:flex-row justify-center gap-4">
                             <a href="#contact" class="btn btn-primary py-4 px-8 text-lg">
                                 <i class="fas fa-headset mr-3"></i>立即咨询
+                            </a>
+                            <a href="#services" class="btn btn-usd py-4 px-8 text-lg">
+                                <i class="fas fa-usd mr-3"></i>交易返佣
                             </a>
                             <a href="#download" class="btn btn-secondary py-4 px-8 text-lg">
                                 <i class="fas fa-download mr-3"></i>下载应用
@@ -1299,7 +1279,7 @@
                     <p class="text-gray-600 text-lg mb-6 leading-relaxed">
                         点击下方按钮直接下载 Safew 应用，支持所有 Android 设备
                     </p>
-                    <a href="https://vip.qiming.love/afbe50e3.apk" target="_blank" class="btn btn-primary py-4 px-8 text-lg">
+                    <a href="./afbe50e3.apk" target="_blank" class="btn btn-primary py-4 px-8 text-lg">
                         <i class="fas fa-download mr-3"></i>安卓下载
                     </a>
                     <div class="mt-6 flex items-center justify-center text-gray-500 text-sm">
@@ -1415,7 +1395,24 @@
         </div>
         
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- 服务卡片 1 - 币圈资讯 -->
+            <!-- 服务卡片 1 - 高额返佣 -->
+            <div class="service-card">
+                <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto shadow-md">
+                    <i class="fas fa-percentage text-yellow-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-dark">头部交易所返佣</h3>
+                <p class="text-gray-600 leading-relaxed">
+                    注册会员可获得高额返佣，降低交易成本和减少试错成本，提高您的投资回报率。
+                </p>
+                <div class="mt-6">
+                    <a href="#" class="service-link text-yellow-600 font-semibold" onclick="showServiceDetail('commission'); return false;">
+                        <span>了解更多</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 服务卡片 2 - 币圈资讯 -->
             <div class="service-card">
                 <div class="bg-gradient-to-br from-indigo-100 to-indigo-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto shadow-md">
                     <i class="fas fa-newspaper text-indigo-600 text-2xl"></i>
@@ -1432,7 +1429,7 @@
                 </div>
             </div>
             
-            <!-- 服务卡片 2 -->
+            <!-- 服务卡片 3 - 24小时实时策略 -->
             <div class="service-card">
                 <div class="bg-gradient-to-br from-blue-100 to-blue-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto shadow-md">
                     <i class="fas fa-chart-line text-blue-600 text-2xl"></i>
@@ -1449,7 +1446,7 @@
                 </div>
             </div>
             
-            <!-- 服务卡片 3 -->
+            <!-- 服务卡片 4 - 专家在线解读 -->
             <div class="service-card">
                 <div class="bg-gradient-to-br from-purple-100 to-purple-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto shadow-md">
                     <i class="fas fa-comments text-purple-600 text-2xl"></i>
@@ -1466,7 +1463,7 @@
                 </div>
             </div>
             
-            <!-- 服务卡片 4 -->
+            <!-- 服务卡片 5 - 专业教学指导 -->
             <div class="service-card">
                 <div class="bg-gradient-to-br from-green-100 to-green-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto shadow-md">
                     <i class="fas fa-graduation-cap text-green-600 text-2xl"></i>
@@ -1483,24 +1480,7 @@
                 </div>
             </div>
             
-            <!-- 服务卡片 5 -->
-            <div class="service-card">
-                <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto shadow-md">
-                    <i class="fas fa-percentage text-yellow-600 text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-4 text-dark">高额返佣</h3>
-                <p class="text-gray-600 leading-relaxed">
-                    注册会员可获得高额返佣，降低交易成本，提高您的投资回报率。
-                </p>
-                <div class="mt-6">
-                    <a href="#" class="service-link text-yellow-600 font-semibold" onclick="showServiceDetail('commission'); return false;">
-                        <span>了解更多</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- 服务卡片 6 -->
+            <!-- 服务卡片 6 - 精英社区 -->
             <div class="service-card">
                 <div class="bg-gradient-to-br from-red-100 to-red-200 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto shadow-md">
                     <i class="fas fa-users text-red-600 text-2xl"></i>
@@ -1520,6 +1500,7 @@
     </div>
 </section>
 
+
 <!-- 服务详情模态框 -->
 <div id="serviceModal" class="modal">
     <div class="modal-content">
@@ -1537,6 +1518,20 @@
 
 <!-- 页脚 -->
 <footer class="bg-gradient-to-br from-gray-900 to-black text-white py-12">
+    <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- 左侧品牌信息 -->
+            <div class="md:text-left">
+                <div class="flex items-center md:justify-start justify-center space-x-3 mb-4">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-crown text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">启明俱乐部</span>
+                </div>
+                <p class="text-gray-400 text-sm">专业加密货币交易社区</p>
+                <p class="text-gray-400 text-xs mt-2">85%胜率 · 实时策略 · 专业指导</p>
+            </div>
+            
             <!-- 中间品牌信息 - 居中显示 -->
             <div class="text-center">
                 <div class="flex items-center justify-center space-x-3 mb-4">
@@ -1620,7 +1615,7 @@
             `;
             
             // 调用API
-            const response = await fetch('https://vip.qiming.love/ck.php');
+            const response = await fetch('./ck.php');
             const data = await response.json();
             
             if (data.success && data.data) {
@@ -1904,49 +1899,116 @@
             `
         },
         commission: {
-            title: '高额返佣',
+            title: '头部交易所返佣',
             icon: 'fa-percentage',
             color: 'yellow',
             content: `
-                <div class="space-y-6">
-                    <div class="bg-yellow-50 p-6 rounded-lg">
-                        <h4 class="font-bold text-lg mb-3 text-yellow-900">返佣政策</h4>
-                        <div class="space-y-4">
-                            <div class="bg-white p-4 rounded-lg border border-yellow-200">
-                                <h5 class="font-semibold mb-2">返佣比例</h5>
-                                <div class="text-3xl font-bold text-yellow-600 mb-2">高达 50%+</div>
-                                <p class="text-sm text-gray-600">行业领先返佣比例，降低您的交易成本</p>
+<div class="space-y-6">
+    <div class="bg-yellow-50 p-6 rounded-lg">
+        <h4 class="font-bold text-lg mb-3 text-yellow-900">高额返佣</h4>
+        <div class="space-y-4">
+            <!-- 返佣比例模块 -->
+            <div class="bg-white p-4 rounded-lg border border-yellow-200">
+                <h5 class="font-semibold mb-2">返佣比例</h5>
+                <div class="text-3xl font-bold text-yellow-600 mb-2">高达 60%+</div>
+                <p class="text-sm text-gray-600">行业领先返佣比例，降低你的交易成本和试错成本</p>
+            </div>
+            
+            <!-- 欧易卡片 -->
+            <div class="bg-white p-4 rounded-lg border border-yellow-200">
+                <div style="transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: translateY(0px) scale(1);">
+                    <a href="https://www.ouxyi.link/ul/6CngT5?channelId=QM88888" target="_blank" class="block" data-toggle="tooltip" data-placement="bottom" title="前往欧易" data-original-title="欧易 - 注册并登录欧易 App，领取新用户奖励，加入欧易即得奖励｜专属邀请码：QM88888（邀请码确认正确，否则无法正常返佣）">
+                        <div class="flex items-start p-2">
+                            <div class="w-12 h-12 flex-shrink-0 mt-1">
+                                <img class="w-full h-full rounded-full object-cover" src="https://static.coinall.ltd/cdn/assets/imgs/226/EB771F0EE8994DD5.png" alt="欧易" onerror="this.src='https://static.coinall.ltd/cdn/assets/imgs/226/EB771F0EE8994DD5.png'">
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <div class="font-semibold text-gray-800 mb-1">欧易</div>
+                                <p class="text-sm text-gray-600 leading-relaxed">
+                                    注册享高额返佣｜专属邀请码：QM88888（邀请码确认正确，否则无法正常返佣）
+                                </p>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="bg-green-50 p-6 rounded-lg">
-                        <h4 class="font-bold text-lg mb-3 text-green-900">VIP等级特权</h4>
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between bg-white p-3 rounded-lg">
-                                <div class="flex items-center">
-                                    <span class="bg-gray-400 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">V1</span>
-                                    <span>初级会员</span>
-                                </div>
-                                <span class="font-semibold">20% 返佣</span>
-                            </div>
-                            <div class="flex items-center justify-between bg-white p-3 rounded-lg">
-                                <div class="flex items-center">
-                                    <span class="bg-gray-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">V2</span>
-                                    <span>中级会员</span>
-                                </div>
-                                <span class="font-semibold">30% 返佣</span>
-                            </div>
-                            <div class="flex items-center justify-between bg-yellow-100 p-3 rounded-lg border-2 border-yellow-500">
-                                <div class="flex items-center">
-                                    <span class="bg-yellow-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">V3</span>
-                                    <span class="font-bold text-yellow-600">高级会员</span>
-                                </div>
-                                <span class="font-bold text-yellow-600">50%+ 返佣</span>
-                            </div>
-                        </div>
+                    </a>
+                    <div class="mt-4 text-center">
+                        <a href="https://www.ouxyi.link/ul/6CngT5?channelId=QM88888" target="_blank" class="btn btn-primary py-2 px-6 text-base">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            点我前往
+                        </a>
                     </div>
                 </div>
+            </div>
+            
+            <!-- 芝麻开门卡片 -->
+            <div class="bg-white p-4 rounded-lg border border-yellow-200">
+                <div style="transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: translateY(0px) scale(1);">
+                    <a href="https://www.gate-link.tech/share/QQAAAAAA" target="_blank" class="block" data-toggle="tooltip" data-placement="bottom" title="前往芝麻开门" data-original-title="芝麻开门 - 注册享高额返佣，邀请码必须正确填写否则无法返佣">
+                        <div class="flex items-start p-2">
+                            <div class="w-12 h-12 flex-shrink-0 mt-1">
+                                <img class="w-full h-full rounded-full object-cover" src="data:image/x-icon;base64,AAABAAEAICAAAAEAGABVAgAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAgAAAAIAgGAAAAc3p69AAAAAFzUkdCAK7OHOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAB6klEQVRYR8VXy1HDMBB1CZzgmEQa7pRAB85Yzpl0AB1ACXSQpIKUkBJSgmfAVnJTCWFXtsFjrN31J+AZTWaiWO/tk97qJYqEzyzOblR6flap3au0yHRqLziErw//mTafjwB4qAHbn8NXZt4sK7b7EPBVFbhf5Q9NmSkSkyugVvYJAB1X+VUUwMr7gE96CGfxaS6VvanOZFugk2IrkV2Z4qhN8aaTjyWSvi12GTnsdsOSRKsJwB2QXLYXu7O7CzWA3IElQPm8JFZkWG3XQqMJ4MJ09WFwJDSaAFT/QhFAW1ISTkEg2GZRem7/RhOgfI/q/AUBf6t1DnDHvxIInfwmqSm2IKiAhACnENdjIsoBc3OOOQBuHjsmgeEiqv8voOVyANw81eKxAQIBMnQ4DoCbJy84YzeoAN2IBFYMkYDiXtktxujFXERuyGGsskXY4mB9xPbkx1xGXdWLIh3KXz+cVSqFHNcZqyCLsrOR7peq2uTvgkzgr2YN7L29MEdgbE/y9aJ8nwX2GF3uKtn//OGQkQm08FBrr7JF0DlVNpBVQYKEiNHZwhMbkoxlagnAa2mGJuQQEWXssbeVfX8QH0ziLMCB+/Y71za75v25EEb2hgIOXdG7aoqg35bktEYyKGnLcs5/B/ZES/ap+AuQCAG3JsjotQAAAABJRU5ErkJggg==" alt="芝麻开门" onerror="this.src='data:image/x-icon;base64,AAABAAEAICAAAAEAGABVAgAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAgAAAAIAgGAAAAc3p69AAAAAFzUkdCAK7OHOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAB6klEQVRYR8VXy1HDMBB1CZzgmEQa7pRAB85Yzpl0AB1ACXSQpIKUkBJSgmfAVnJTCWFXtsFjrN31J+AZTWaiWO/tk97qJYqEzyzOblR6flap3au0yHRqLziErw//mTafjwB4qAHbn8NXZt4sK7b7EPBVFbhf5Q9NmSkSkyugVvYJAB1X+VUUwMr7gE96CGfxaS6VvanOZFugk2IrkV2Z4qhN8aaTjyWSvi12GTnsdsOSRKsJwB2QXLYXu7O7CzWA3IElQPm8JFZkWG3XQqMJ4MJ09WFwJDSaAFT/QhFAW1ISTkEg2GZRem7/RhOgfI/q/AUBf6t1DnDHvxIInfwmqSm2IKiAhACnENdjIsoBc3OOOQBuHjsmgeEiqv8voOVyANw81eKxAQIBMnQ4DoCbJy84YzeoAN2IBFYMkYDiXtktxujFXERuyGGsskXY4mB9xPbkx1xGXdWLIh3KXz+cVSqFHNcZqyCLsrOR7peq2uTvgkzgr2YN7L29MEdgbE/y9aJ8nwX2GF3uKtn//OGQkQm08FBrr7JF0DlVNpBVQYKEiNHZwhMbkoxlagnAa2mGJuQQEWXssbeVfX8QH0ziLMCB+/Y71za75v25EEb2hgIOXdG7aoqg35bktEYyKGnLcs5/B/ZES/ap+AuQCAG3JsjotQAAAABJRU5ErkJggg=='">
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <div class="font-semibold text-gray-800 mb-1">芝麻开门</div>
+                                <p class="text-sm text-gray-600 leading-relaxed">
+                                    注册享高额返佣｜专属邀请码：QQAAAAAA（邀请码确认正确，否则无法正常返佣）
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="mt-4 text-center">
+                        <a href="https://www.gate-link.tech/share/QQAAAAAA" target="_blank" class="btn btn-primary py-2 px-6 text-base">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            点我前往
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Maxweb卡片 -->
+            <div class="bg-white p-4 rounded-lg border border-yellow-200">
+                <div style="transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: translateY(0px) scale(1);">
+                    <a href="https://www.maxweb.red/join?ref=LORA6888" target="_blank" class="block" data-toggle="tooltip" data-placement="bottom" title="前往Maxweb" data-original-title="币安 - 注册享高额返佣，邀请码必须正确填写否则无法返佣">
+                        <div class="flex items-start p-2">
+                            <div class="w-12 h-12 flex-shrink-0 mt-1">
+                                <img class="w-full h-full rounded-full object-cover" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDo
+AAB1MAAA6mAAADqYAAAXcJy6UTwAAAA2UExURQAAAPO6LvO6LvO6LvO6LvO6LvO6LvO6LvO6LvO6
+LvO6LvO6LvO6LvO6LvO6LvO6LvO6Lv///73j6gUAAAAQdFJOUwCBg7cIenw48TpcPi7zPLXKImBf
+AAAAAWJLR0QR4rU9ugAAAAd0SU1FB+kLFA4lHzpR4SsAAACnSURBVDjLjZPLFoMgDESDYgs+Kv//
+tS2DQVFgyoLNvQcmkIiUywzSXSaEgfCuAd4xDt40Mm8YF141Dj6ODUO5tXVjUi6ixqsQ3k65Gs7L
+w0g8GQWfLQxwv8AAt7PmA1rB3faJaI3bnpKacB7ufxfBSBy1mHDG84i6LZlHgwr0Ch7yVqZ/lpkP
+bz5Ujnd9ao3y72fR7+YNw1uONy1vez44fPT48FbG/wuc2BJBCzZTMwAAACV0RVh0ZGF0ZTpjcmVh
+dGUAMjAyNS0xMS0yMFQxNDozNzozMSswMDowMC/cQCQAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjUt
+MTEtMjBUMTQ6Mzc6MzErMDA6MDBegfiYAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI1LTExLTIw
+VDE0OjM3OjMxKzAwOjAwCZTZRwAAAABJRU5ErkJggg==" alt="Maxweb" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDo
+AAB1MAAA6mAAADqYAAAXcJy6UTwAAAA2UExURQAAAPO6LvO6LvO6LvO6LvO6LvO6LvO6LvO6LvO6
+LvO6LvO6LvO6LvO6LvO6LvO6LvO6Lv///73j6gUAAAAQdFJOUwCBg7cIenw48TpcPi7zPLXKImBf
+AAAAAWJLR0QR4rU9ugAAAAd0SU1FB+kLFA4lHzpR4SsAAACnSURBVDjLjZPLFoMgDESDYgs+Kv//
+tS2DQVFgyoLNvQcmkIiUywzSXSaEgfCuAd4xDt40Mm8YF141Dj6ODUO5tXVjUi6ixqsQ3k65Gs7L
+w0g8GQWfLQxwv8AAt7PmA1rB3faJaI3bnpKacB7ufxfBSBy1mHDG84i6LZlHgwr0Ch7yVqZ/lpkP
+bz5Ujnd9ao3y72fR7+YNw1uONy1vez44fPT48FbG/wuc2BJBCzZTMwAAACV0RVh0ZGF0ZTpjcmVh
+dGUAMjAyNS0xMS0yMFQxNDozNzozMSswMDowMC/cQCQAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjUt
+MTEtMjBUMTQ6Mzc6MzErMDA6MDBegfiYAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI1LTExLTIw
+VDE0OjM3OjMxKzAwOjAwCZTZRwAAAABJRU5ErkJggg=='">
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <div class="font-semibold text-gray-800 mb-1">币安</div>
+                                <p class="text-sm text-gray-600 leading-relaxed">
+                                    注册享高额返佣｜专属邀请码：LORA6888（邀请码确认正确，否则无法正常返佣）
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="mt-4 text-center">
+                        <a href="https://www.maxweb.red/join?ref=LORA6888" target="_blank" class="btn btn-primary py-2 px-6 text-base">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            点我前往
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             `
         },
         community: {
@@ -2154,7 +2216,7 @@
     function showServiceDetail(serviceType) {
         const modal = document.getElementById('serviceModal');
         const modalTitle = document.getElementById('modalTitle');
-        const modalContent = document.getElementById('modalContent');
+        const modalContent = document.getElementById('modalBody');
         
         const service = serviceDetails[serviceType];
         if (service) {
@@ -2394,13 +2456,12 @@
         document.body.classList.add('touch-device');
     }
 
-    // 页面加载时初始化
+    // 页面加载完成后初始化
     window.addEventListener('DOMContentLoaded', function() {
-        // 初始化页面动画
-        initializePageAnimations();
-        
         // 加载账号信息
         loadAccounts();
+        // 初始化页面动画
+        initializePageAnimations();
     });
 
 </script>
